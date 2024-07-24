@@ -1,0 +1,281 @@
+Creating project :
+npx create-react-app todo-list
+cd todo-list
+npm start
+
+
+
+
+
+Project structure :
+todo-list/
+├── node_modules/
+├── public/
+│   ├── favicon.ico
+│   ├── index.html
+│   ├── logo192.png
+│   ├── logo512.png
+│   ├── manifest.json
+│   └── robots.txt
+├── src/
+│   ├── App.css
+│   ├── App.js
+│   ├── index.css
+│   └── index.js
+├── .gitignore
+├── package.json
+└── README.md
+
+
+
+
+
+
+
+Explaination:
+State Management:
+useState hook is used to manage the state of todos (an array of to-do items) and inputValue (the current input value).
+Adding a To-Do:
+The addTodo function adds the current inputValue to the todos array if it's not empty, and then clears the inputValue.
+Removing a To-Do:
+The removeTodo function filters out the to-do item at the specified index from the todos array.
+Rendering the UI:
+The input element allows the user to type in a new to-do item.
+The button element triggers the addTodo function when clicked.
+The ul element lists all the to-do items, each with a remove button.
+
+
+
+
+
+
+
+
+
+Detailed explanation :
+
+public/index.html
+This is the main HTML file that serves our React app. It includes a div with an id="root" where our entire React application will be rendered.
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ToDoList App</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+  </body>
+</html>
+
+
+src/index.js
+This is the entry point of our React application. It renders the App component into the DOM.
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+);
+
+
+src/index.css
+This file contains global styles for the application. For simplicity, we will leave it mostly empty or with basic resets.
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+
+src/App.js
+This is the main component of our application. It includes the logic for managing the to-do list.
+
+import React, { useState, useEffect } from 'react';
+import './App.css';
+
+function App() {
+  const [todos, setTodos] = useState(() => {
+    const savedTodos = localStorage.getItem('todos');
+    return savedTodos ? JSON.parse(savedTodos) : [];
+  });
+  const [inputValue, setInputValue] = useState('');
+
+  useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(todos));
+  }, [todos]);
+
+  const addTodo = () => {
+    if (inputValue.trim()) {
+      setTodos([...todos, { text: inputValue, completed: false }]);
+      setInputValue('');
+    }
+  };
+
+  const removeTodo = (index) => {
+    setTodos(todos.filter((_, i) => i !== index));
+  };
+
+  const toggleTodo = (index) => {
+    const newTodos = todos.map((todo, i) => {
+      if (i === index) {
+        return { ...todo, completed: !todo.completed };
+      }
+      return todo;
+    });
+    setTodos(newTodos);
+  };
+
+  return (
+    <div className="App">
+      <header className="App-header">
+        <h1>To-Do List</h1>
+        <input
+          type="text"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+        />
+        <button onClick={addTodo}>Add</button>
+        <ul>
+          {todos.map((todo, index) => (
+            <li key={index} className={todo.completed ? 'completed' : ''}>
+              <input
+                type="checkbox"
+                checked={todo.completed}
+                onChange={() => toggleTodo(index)}
+              />
+              {todo.text}
+              <button onClick={() => removeTodo(index)}>Remove</button>
+            </li>
+          ))}
+        </ul>
+      </header>
+    </div>
+  );
+}
+
+export default App;
+src/App.css
+This file contains styles specific to the App component.
+
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+input[type="text"] {
+  padding: 10px;
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+button {
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #61dafb;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+li.completed {
+  text-decoration: line-through;
+  background: #d3d3d3;
+}
+
+li button {
+  background: #ff4d4f;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+li button:hover {
+  background: #ff7875;
+}
+
+
+Detailed Explanation
+App Component
+
+State Management
+useState hook is used to manage the state of todos and inputValue.
+todos is initialized with data from localStorage, allowing the list to persist across page reloads.
+
+useEffect Hook
+useEffect is used to update localStorage whenever the todos state changes.
+This ensures that the to-dos are saved and loaded correctly.
+
+addTodo Function
+Adds a new to-do item to the todos array.
+Checks if the input value is not empty before adding.
+Resets the inputValue after adding the new to-do.
+
+removeTodo Function
+Removes a to-do item from the todos array based on its index.
+
+toggleTodo Function
+Toggles the completed status of a to-do item.
+Creates a new array with the updated completed status.
+
+Rendering the UI
+An input field for adding new to-do items.
+A button to add the new to-do item.
+A list of to-do items, each with a checkbox to mark as completed and a button to remove the item.
+Conditional class completed is added to completed to-dos for styling.
+
+App.css
+Basic styles to make the app look presentable.
+Styles for the main app container and header.
+Input and button styles.
+List styles for the to-do items.
+Styles for the completed class to differentiate completed to-dos.
+
+Running the App
+Start the Development Server
+Open your terminal and navigate to the project directory.
+Run the following command:
+npm start
+This will start the development server and open the app in your default web browser at http://localhost:3000.
+
