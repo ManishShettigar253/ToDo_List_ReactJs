@@ -1,0 +1,35 @@
+/* src/components/TodoInput.css */
+
+/* Style for the container holding the input and button */
+.TodoInput {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    gap: 1rem; /* Space between input and button */
+    margin-bottom: 2rem; /* Space below the input section */
+  }
+  
+  /* Style for the add button */
+  .AddButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem; /* Set width */
+    height: 3rem; /* Set height */
+    border-radius: 50%; /* Make it a circle */
+    background-color: #007bff; /* Background color */
+    color: white; /* Icon color */
+    cursor: pointer; /* Pointer cursor on hover */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    transition: background-color 0.3s; /* Smooth color transition */
+  }
+  
+  .AddButton:hover {
+    background-color: #0056b3; /* Darker background on hover */
+  }
+  
+  .AddButton svg {
+    width: 1.5rem; /* Icon size */
+    height: 1.5rem; /* Icon size */
+  }
+  

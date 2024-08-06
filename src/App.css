@@ -1,59 +1,122 @@
+/* General styles for the entire application */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #ffffff; /* White background for the entire page */
+}
+
 .App {
   text-align: center;
+  padding: 0 1rem; /* Add padding to avoid content touching edges */
 }
 
+/* Styles for the Navbar */
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  background-color: #282c34; /* Dark color for the navbar */
+  color: #ffffff; /* White text color */
+  padding: 1rem; /* Space around the text */
+  width: 100%; /* Full width */
+  position: fixed; /* Fixed at the top */
+  top: 0;
+  left: 0;
+  z-index: 1000; /* Ensures it stays on top of other content */
 }
 
-input[type="text"] {
-  padding: 10px;
-  font-size: 16px;
-  margin-right: 10px;
+/* Ensure content below the navbar is not hidden behind it */
+.App-content {
+  margin-top: 10%; /* Adjust based on the height of the Navbar */
+}
+
+/* Styling for the input and button to be on the same line */
+.TodoInput {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  gap: 1rem; /* Space between input and button */
+  margin-bottom: 2rem; /* Space below the input section */
+}
+
+input {
+  padding: 0.5rem; /* Add padding for better appearance */
+  font-size: 1.2rem; /* Larger font size */
+  border: 1px solid #ddd; /* Border for input */
+  border-radius: 4px; /* Rounded corners */
 }
 
 button {
-  padding: 10px;
-  font-size: 16px;
-  cursor: pointer;
+  padding: 0.5rem 1rem; /* Padding for larger button size */
+  font-size: 1.2rem; /* Larger font size */
+  border: none; /* Remove border */
+  background-color: #007bff; /* Button background color */
+  color: white; /* Button text color */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
 }
 
+button:hover {
+  background-color: #0056b3; /* Darker background on hover */
+}
+
+/* Styling for the list to display items centered and responsive */
 ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
+  list-style-type: none; /* Remove bullet points */
+  padding: 0; /* Remove padding */
+  margin: 0 auto; /* Center the list */
+  max-width: 100%; /* Ensure the list doesn't exceed viewport width */
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: center; /* Center items horizontally */
+}
+
+/* Styling for the list items */
+li {
+  display: flex; /* Flexbox for alignment */
   align-items: center;
-  background: #61dafb;
-  margin: 10px 0;
-  padding: 10px;
-  border-radius: 5px;
+  justify-content: center;
+  background-color: #f0f0f0; /* Light gray background for items */
+  border: 1px solid #ddd; /* Border around items */
+  border-radius: 4px; /* Rounded corners */
+  padding: 0.5rem 1rem; /* Padding inside items */
+  margin: 0.5rem; /* Space between items */
+  width: 100%; /* Full width of the container */
+  max-width: 600px; /* Max width to control size */
+  box-sizing: border-box; /* Include padding and border in element's total width and height */
+  position: relative; /* Position for the remove button */
 }
 
-li.completed {
+/* Add margin to the button to create space between text and button */
+button {
+  margin-left: 1rem; /* Adjust this value as needed */
+}
+
+/* Ensure completed items have the right style */
+.completed {
   text-decoration: line-through;
-  background: #d3d3d3;
+  color: #aaa;
 }
 
-li button {
-  background: #ff4d4f;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 5px 10px;
-  cursor: pointer;
-}
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .TodoInput {
+    flex-direction: column; /* Stack input and button vertically on small screens */
+  }
 
-li button:hover {
-  background: #ff7875;
+  input {
+    width: 100%; /* Full width for input */
+    box-sizing: border-box; /* Include padding and border in element's total width */
+  }
+
+  button {
+    width: 100%; /* Full width for button */
+    margin-left: 0; /* Remove left margin in small screens */
+    margin-top: 0.5rem; /* Space above button when stacked */
+  }
+
+  li {
+    flex-direction: column; /* Stack elements vertically within list item on small screens */
+  }
+
+  button {
+    width: auto; /* Button should not overflow */
+  }
 }
